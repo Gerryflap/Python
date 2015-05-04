@@ -1,8 +1,9 @@
 import random
-from Tkinter import *
+from tkinter import *
 
 # --< Bash import statement: >--
 #import sys; sys.path.append("/home/tim/git/Python"); import main
+import _thread
 
 root = Tk()
 list = 'Carl Patric Lindsay Helmut Chris Gwen'.split()
@@ -44,14 +45,15 @@ for worker in m.assignedWorkers:
     print(worker)
 
 def guiLoop(integer):
-    int = integer + 1
-    print 'Potje vet?: ' + str(int)
-    root.after(200, guiLoop(int))
+
+    while True:
+        integer += 1
+        print ('Potje vet?: ' + str(integer))
 
 
 def Pressed():
     d.assignTask('mining')
-    print 'Assigned Worker to' + ' ' + str(d.task)
+    print ('Assigned Worker to' + ' ' + str(d.task))
 
 
 button = Button(root, text='Assign current to mines', command = Pressed)
@@ -61,5 +63,5 @@ button.pack(pady=20, padx=20)
 listb.pack()
 entry.pack()
 
-root.after(200, guiLoop(10))
+_thread.start_new_thread(guiLoop, tuple([10]))
 root.mainloop()
